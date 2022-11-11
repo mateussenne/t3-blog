@@ -1,22 +1,29 @@
-name: ci
+name: CI
 
-on: push
+on:
+  push:
+  pull_request:
 
 jobs:
   linters:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        node-version: [v16.16.0]
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Node 18.12.1
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.12.1
-          cache: 'npm'
-
-      - name: Install Node packages
-        run: npm install --frozen-lockfile
-
-      - name: Lint
-        run: npm run lint
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: creates .env file
+      run: |
+        touch .env
+        echo DATABASE_URL='' >> .env
+         echo NEXTAUTH_SECRET='' >> .env
+          echo NEXTAUTH_URL='' >> .env
+           echo GITHUB_CLIENT_ID='' >> .env
+            echo GITHUB_CLIENT_SECRET='' >> .env
+    - run: npm ci
+    - run: npm run lint
