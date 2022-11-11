@@ -20,9 +20,9 @@ jobs:
     - name: creates .env file
       run: |
         touch .env
-        echo DATABASE_URL='' >> .env
+        echo DATABASE_URL='http://localhost:3000' >> .env
          echo NEXTAUTH_SECRET='' >> .env
-          echo NEXTAUTH_URL='' >> .env
+          echo NEXTAUTH_URL='http://localhost:3000' >> .env
            echo GITHUB_CLIENT_ID='' >> .env
             echo GITHUB_CLIENT_SECRET='' >> .env
     - run: npm ci
