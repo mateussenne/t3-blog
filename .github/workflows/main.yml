@@ -1,0 +1,22 @@
+name: ci
+
+on: push
+
+jobs:
+  linters:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node 18.12.1
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.12.1
+          cache: 'npm'
+
+      - name: Install Node packages
+        run: npm install --frozen-lockfile
+
+      - name: Lint
+        run: npm run lint
